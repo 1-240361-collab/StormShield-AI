@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/chat.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Leaflet CSS for maps -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -64,6 +65,25 @@
         </div>
     </div>
 
+    <!-- AI Chat Widget -->
+    <button id="chat-toggle" class="chat-toggle">🤖 AI Assistant</button>
+
+    <div id="chat-window" class="chat-window hidden">
+        <div class="chat-header">
+            <span>🤖 StormShield AI Assistant</span>
+            <button id="chat-close" class="chat-close">✕</button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="chat-message bot">
+                👋 Hi! I'm StormShield AI. Ask me anything about emergencies — earthquake, flood, fire, first aid, evacuation. How can I help?
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Ask about any emergency..." />
+            <button id="chat-send" class="chat-send">Send</button>
+        </div>
+    </div>
+
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
@@ -71,5 +91,6 @@
     <script type="module" src="js/dashboard.js"></script>
     <script type="module" src="js/sos.js"></script>
     <script type="module" src="js/evacuation.js"></script>
+    <script type="module" src="js/chatbot.js"></script>
 </body>
 </html>
