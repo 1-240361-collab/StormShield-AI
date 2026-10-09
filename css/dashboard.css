@@ -175,3 +175,32 @@
 }
 .btn-confirm:hover { background-color: #b71c1c; }
 .btn-confirm:disabled { opacity: 0.5; animation: none; cursor: not-allowed; }
+/* Evacuation Center Button */
+.btn-evac {
+    padding: 1rem;
+    background-color: var(--success);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+}
+.btn-evac:hover { background-color: #1b5e20; }
+.btn-evac:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Evacuation Info Panel */
+.evac-info {
+    background-color: var(--bg-card);
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--success);
+    color: var(--text-main);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    display: none;
+}
+.evac-info strong { color: var(--success); }
+.evac-info .distance { color: var(--primary); font-weight: 700; }

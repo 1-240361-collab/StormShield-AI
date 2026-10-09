@@ -1,3 +1,5 @@
+
+
 // js/dashboard.js
 import { supabase } from './supabase.js';
 
@@ -23,7 +25,8 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
 });
 
 // --- Initialize Map ---
-const map = L.map('map').setView([14.5995, 120.9842], 13);
+const map = L.map('map').setView([14.3122, 121.1114], 14);
+window.map = map;
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);

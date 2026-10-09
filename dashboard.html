@@ -30,12 +30,16 @@
             <a href="#" class="btn-action">🤖 AI Assistant</a>
         </aside>
 
-        <!-- Center: Map + Alerts -->
+        <!-- Center: Map + Alerts + GPS -->
         <section class="main-content">
             <div class="alert-banner" id="weather-alert">
                 ⚠️ No active weather alerts for your area.
             </div>
             <div id="map"></div>
+            <button id="find-evac-btn" class="btn-evac">
+                📍 Find Nearest Evacuation Center
+            </button>
+            <div id="evac-info" class="evac-info"></div>
         </section>
 
         <!-- Right: Recent Incidents Feed -->
@@ -66,5 +70,6 @@
     <!-- App Scripts -->
     <script type="module" src="js/dashboard.js"></script>
     <script type="module" src="js/sos.js"></script>
+    <script type="module" src="js/evacuation.js"></script>
 </body>
 </html>
