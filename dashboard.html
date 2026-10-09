@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StormShield AI | Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS for maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">🌪️ StormShield AI</div>
+        <div class="nav-links">
+            <span id="user-name" class="user-greeting">Loading...</span>
+            <button id="logout-btn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <!-- Left: Sidebar / Quick Actions -->
+        <aside class="sidebar">
+            <h3>Quick Actions</h3>
+            <button id="sos-btn" class="btn-sos">🆘 SOS EMERGENCY</button>
+            <a href="report.html" class="btn-action">📝 Report Incident</a>
+            <a href="#" class="btn-action">🗺️ Evacuation Map</a>
+            <a href="#" class="btn-action">🤖 AI Assistant</a>
+        </aside>
+
+        <!-- Center: Map + Alerts -->
+        <section class="main-content">
+            <div class="alert-banner" id="weather-alert">
+                ⚠️ No active weather alerts for your area.
+            </div>
+            <div id="map"></div>
+        </section>
+
+        <!-- Right: Recent Incidents Feed -->
+        <aside class="incident-feed">
+            <h3>Recent Incidents</h3>
+            <div id="incidents-list">
+                <p class="empty-state">No incidents reported yet.</p>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

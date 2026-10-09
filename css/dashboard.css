@@ -1,0 +1,96 @@
+/* css/dashboard.css */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 250px 1fr 300px;
+    gap: 1rem;
+    padding: 1rem;
+    height: calc(100vh - 70px);
+    background-color: var(--bg-dark);
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #333;
+}
+.sidebar h3 { font-size: 1rem; margin-bottom: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+.btn-sos {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--danger);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    animation: pulse 2s infinite;
+}
+.btn-sos:hover { background-color: #b71c1c; }
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(211, 47, 47, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(211, 47, 47, 0); }
+}
+.btn-action {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #2a2a2a;
+    color: var(--text-main);
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+.btn-action:hover { background-color: #444; }
+
+/* Main Content */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.alert-banner {
+    background-color: #332b1a;
+    color: #ffcc00;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid #ffcc00;
+    font-size: 0.9rem;
+}
+#map {
+    flex: 1;
+    border-radius: 12px;
+    border: 1px solid #333;
+    min-height: 400px;
+}
+
+/* Incident Feed */
+.incident-feed {
+    background-color: var(--bg-card);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #333;
+    overflow-y: auto;
+}
+.incident-feed h3 { font-size: 1rem; margin-bottom: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+.empty-state { color: var(--text-muted); font-size: 0.9rem; text-align: center; padding: 2rem 0; }
+
+/* Nav Links */
+.nav-links { display: flex; align-items: center; gap: 1rem; }
+.user-greeting { font-size: 0.9rem; color: var(--text-muted); }
+.btn-logout {
+    background-color: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+.btn-logout:hover { background-color: var(--primary); color: white; }
