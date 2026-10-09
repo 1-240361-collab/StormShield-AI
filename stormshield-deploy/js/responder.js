@@ -51,7 +51,6 @@ async function loadIncidents() {
         return;
     }
 
-    // Enrich with analysis if severity is missing or low confidence
     allIncidents = (data || []).map(incident => {
         const analysis = analyzeDamage(incident.description || '', incident.type);
         return {
@@ -76,7 +75,6 @@ function renderIncidents() {
         filtered = allIncidents.filter(i => i.type === filter);
     }
 
-    // Sort by severity descending, then by created_at
     filtered.sort((a, b) => {
         if (b._severity !== a._severity) return b._severity - a._severity;
         return new Date(b.created_at) - new Date(a.created_at);
@@ -121,7 +119,6 @@ function renderIncidents() {
         `;
     }).join('');
 
-    // Add event listeners
     listEl.querySelectorAll('[data-action]').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -151,7 +148,15 @@ async function handleIncidentAction(action, id) {
         const incident = allIncidents.find(i => i.id === id);
         if (!incident) return;
         const coords = parsePostGISPoint(incident.location);
-        if (coords) map.setView([coords.lat, coords.lng], 16);
+        if (coords) {
+            map.setView([coords.lat, coords.lng], 17);
+            L.popup()
+                .setLatLng([coords.lat, coords.lng])
+                .setContent(`<strong>📍 Incident Location</strong><br>${incident.description || 'No description'}`)
+                .openOn(map);
+        } else {
+            alert('📍 Location data not available for this incident.');
+        }
         return;
     }
 
@@ -172,7 +177,6 @@ async function handleIncidentAction(action, id) {
         return;
     }
 
-    // Update local state and re-render
     const incident = allIncidents.find(i => i.id === id);
     if (incident) incident.status = newStatus;
     renderIncidents();
@@ -258,7 +262,6 @@ function renderSOS() {
         `;
     }).join('');
 
-    // Actions
     listEl.querySelectorAll('[data-action="respond-sos"]').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             e.stopPropagation();
@@ -267,7 +270,6 @@ function renderSOS() {
         });
     });
 
-    // Zoom on click
     listEl.querySelectorAll('.sos-card').forEach(card => {
         card.addEventListener('click', () => {
             const id = card.dataset.id;
@@ -308,7 +310,7 @@ function renderSOSMarkers() {
 
         const icon = L.divIcon({
             className: 'sos-marker',
-            html: '<div style="background-color: #8b0000; width: 34px; height: 34px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 0 20px rgba(255,0,0,0.8); animation: pulse 2s infinite;">🆘</div>',
+            html: '<div style="background-color: #8b0000; width: 34px; height: 34px; border-radius: 50%; border: 3px solid white; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 0 20px rgba(255,0,0,0.8);">🆘</div>',
             iconSize: [34, 34],
             iconAnchor: [17, 17]
         });
@@ -333,22 +335,64 @@ function updateStats() {
     document.getElementById('stat-resolved').textContent = resolvedToday;
 }
 
-// --- Parse PostGIS location ---
+// --- Parse PostGIS location (handles WKT, GeoJSON, and PostGIS binary hex) ---
 function parsePostGISPoint(location) {
     if (!location) return null;
 
-    // GeoJSON format
+    // GeoJSON format: { type: 'Point', coordinates: [lng, lat] }
     if (typeof location === 'object' && location.coordinates) {
         return { lng: location.coordinates[0], lat: location.coordinates[1] };
     }
 
-    // WKT string
+    // WKT string: 'POINT(lng lat)'
     if (typeof location === 'string') {
         const match = location.match(/POINT\(([-\d.]+) ([-\d.]+)\)/);
         if (match) return { lng: parseFloat(match[1]), lat: parseFloat(match[2]) };
     }
 
+    // PostGIS binary hex format — decode it
+    if (typeof location === 'string' && location.length > 40 && /^[0-9A-Fa-f]+$/.test(location)) {
+        try {
+            return decodePostGISHex(location);
+        } catch (e) {
+            return null;
+        }
+    }
+
     return null;
+}
+
+// Decode PostGIS hex format (WKB) to lat/lng
+function decodePostGISHex(hex) {
+    let cleanHex = hex;
+
+    // Extended format with SRID: [endian 1 byte][type 4 bytes][SRID 4 bytes][X 8 bytes][Y 8 bytes]
+    if (hex.startsWith('0101')) {
+        cleanHex = hex.substring(18);
+    } else if (hex.startsWith('01')) {
+        cleanHex = hex.substring(10);
+    }
+
+    // Read two 8-byte little-endian doubles
+    const xHex = cleanHex.substring(0, 16);
+    const yHex = cleanHex.substring(16, 32);
+
+    const lng = hexToDouble(xHex);
+    const lat = hexToDouble(yHex);
+
+    return { lng, lat };
+}
+
+function hexToDouble(hex) {
+    const bytes = [];
+    for (let i = 0; i < hex.length; i += 2) {
+        bytes.push(parseInt(hex.substring(i, i + 2), 16));
+    }
+    bytes.reverse();
+    const buffer = new ArrayBuffer(8);
+    const view = new DataView(buffer);
+    bytes.forEach((b, i) => view.setUint8(i, b));
+    return view.getFloat64(0, false);
 }
 
 // --- Filter Handler ---

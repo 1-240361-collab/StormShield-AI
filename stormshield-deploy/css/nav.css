@@ -1,0 +1,68 @@
+/* css/nav.css — StormShield AI Navigation */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-card);
+    padding: 0.9rem 2rem;
+    border-bottom: 1px solid #333;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.user-greeting {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background-color: #222;
+    border-radius: 20px;
+}
+
+.btn-logout {
+    background-color: transparent;
+    border: 1.5px solid var(--primary);
+    color: var(--primary);
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+}
+.btn-logout:hover {
+    background-color: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
+    transform: translateY(-1px);
+}
+.btn-logout:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+    .navbar { padding: 0.8rem 1rem; }
+    .nav-brand { font-size: 1rem; }
+    .user-greeting { display: none; }
+    .btn-logout { padding: 6px 14px; font-size: 0.8rem; }
+}
