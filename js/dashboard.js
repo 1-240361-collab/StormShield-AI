@@ -1,5 +1,3 @@
-
-
 // js/dashboard.js
 import { supabase } from './supabase.js';
 
@@ -25,8 +23,8 @@ document.getElementById('logout-btn').addEventListener('click', async () => {
 });
 
 // --- Initialize Map ---
-const map = L.map('map').setView([14.3122, 121.1114], 14);
-window.map = map;
+const map = L.map('map').setView([14.3122, 121.1114], 13);
+window.map = map; // Expose globally for evacuation.js
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
@@ -43,9 +41,10 @@ async function loadIncidents() {
         .limit(10);
 
     const list = document.getElementById('incidents-list');
-    
+
     if (error || !data || data.length === 0) {
         list.innerHTML = '<p class="empty-state">No incidents reported yet.</p>';
+        incidentMarkers.clearLayers();
         return;
     }
 
@@ -61,7 +60,6 @@ async function loadIncidents() {
     incidentMarkers.clearLayers();
     data.forEach(incident => {
         if (incident.location) {
-            // PostGIS returns GeoJSON if we ask nicely, or we parse WKT
             const match = incident.location.match(/POINT\(([-\d.]+) ([-\d.]+)\)/);
             if (match) {
                 const lng = parseFloat(match[1]);
@@ -78,11 +76,10 @@ loadIncidents();
 // --- Real-Time: Listen for new incidents ---
 supabase
     .channel('public:incidents')
-    .on('postgres_changes', 
-        { event: 'INSERT', schema: 'public', table: 'incidents' }, 
+    .on('postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'incidents' },
         (payload) => {
-            console.log('🔴 New incident received:', payload.new);
-            loadIncidents(); // Refresh the feed
+            loadIncidents();
             showNotification('📝 New Incident Reported', `${payload.new.type.toUpperCase()}: ${payload.new.description || 'No description'}`);
         }
     )
@@ -91,10 +88,9 @@ supabase
 // --- Real-Time: Listen for new SOS alerts ---
 supabase
     .channel('public:sos_alerts')
-    .on('postgres_changes', 
-        { event: 'INSERT', schema: 'public', table: 'sos_alerts' }, 
-        (payload) => {
-            console.log('🚨 SOS Alert received:', payload.new);
+    .on('postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'sos_alerts' },
+        () => {
             showNotification('🚨 SOS EMERGENCY', 'Someone needs help! Check the map for location.');
         }
     )
@@ -102,10 +98,8 @@ supabase
 
 // --- Browser Notification Helper ---
 function showNotification(title, body) {
-    // Check if the browser supports notifications
     if (!('Notification' in window)) return;
 
-    // Request permission if not granted
     if (Notification.permission === 'default') {
         Notification.requestPermission().then(permission => {
             if (permission === 'granted') {

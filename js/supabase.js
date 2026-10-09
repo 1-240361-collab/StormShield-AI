@@ -7,7 +7,3 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// 🔍 TEMPORARY DEBUG — REMOVE LATER
-console.log('🔌 Supabase client initialized');
-console.log('🔌 URL:', SUPABASE_URL);
-console.log('🔌 Key starts with:', SUPABASE_ANON_KEY.substring(0, 15) + '...');

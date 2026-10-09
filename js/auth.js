@@ -15,12 +15,32 @@ const authError = document.getElementById('auth-error');
 
 let isLogin = true;
 
+// --- Redirect based on user role ---
+async function redirectUser(userId) {
+    const { data, error } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', userId)
+        .single();
+
+    if (error || !data) {
+        window.location.href = 'dashboard.html';
+        return;
+    }
+
+    if (data.role === 'responder' || data.role === 'admin') {
+        window.location.href = 'responder.html';
+    } else {
+        window.location.href = 'dashboard.html';
+    }
+}
+
 // Toggle between Login and Signup
 toggleAuth.addEventListener('click', (e) => {
     e.preventDefault();
     isLogin = !isLogin;
     authError.textContent = '';
-    
+
     if (isLogin) {
         formTitle.textContent = 'Welcome Back';
         formSubtitle.textContent = 'Sign in to access emergency features.';
@@ -53,24 +73,18 @@ authForm.addEventListener('submit', async (e) => {
 
     try {
         if (isLogin) {
-            // Login
             const { data, error } = await supabase.auth.signInWithPassword({ email, password });
             if (error) throw error;
-            
-            // Redirect to dashboard
-            window.location.href = 'dashboard.html';
-
+            await redirectUser(data.user.id);
         } else {
-            // Sign Up
-            const { data, error } = await supabase.auth.signUp({ 
-                email, 
+            const { data, error } = await supabase.auth.signUp({
+                email,
                 password,
                 options: { data: { full_name: fullName } }
             });
             if (error) throw error;
-
             alert('Account created! You can now log in.');
-            window.location.href = 'dashboard.html';
+            await redirectUser(data.user.id);
         }
     } catch (error) {
         authError.textContent = error.message;
@@ -84,7 +98,7 @@ authForm.addEventListener('submit', async (e) => {
 async function checkSession() {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
-        window.location.href = 'dashboard.html';
+        await redirectUser(session.user.id);
     }
 }
 checkSession();

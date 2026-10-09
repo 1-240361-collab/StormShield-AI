@@ -1,10 +1,6 @@
 // js/evacuation.js
 import { supabase } from './supabase.js';
 
-// --- CONFIG: Paste your legacy anon key (eyJ...) here ---
-const EVAC_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjbXJ0cnRjb3Jiam9mdWtvZ2tkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1MjI5NjQsImV4cCI6MjEwNzA5ODk2NH0.w6-o5yl2HQCioFJq0w1FxL82cPqSjGnM6lbsTVAol38';
-const EVAC_API_URL = 'https://lcmrtrtcorbjofukogkd.supabase.co/rest/v1/evacuation_centers_view?select=*&is_active=eq.true';
-
 // Wait for the map to be ready (set globally in dashboard.js)
 const waitForMap = setInterval(() => {
     if (window.map) {
@@ -16,6 +12,10 @@ const waitForMap = setInterval(() => {
 let userMarker = null;
 let routeLine = null;
 let evacMarkers = [];
+
+// --- CONFIG: Legacy anon key (eyJ...) for direct fetch ---
+const EVAC_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjbXJ0cnRjb3Jiam9mdWtvZ2tkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1MjI5NjQsImV4cCI6MjEwNzA5ODk2NH0.w6-o5yl2HQCioFJq0w1FxL82cPqSjGnM6lbsTVAol38';
+const EVAC_API_URL = 'https://lcmrtrtcorbjofukogkd.supabase.co/rest/v1/evacuation_centers_view?select=*&is_active=eq.true';
 
 function initializeEvacuation() {
     const map = window.map;
@@ -33,7 +33,6 @@ function initializeEvacuation() {
             const data = await response.json();
 
             if (!data || data.length === 0) {
-                console.warn('⚠️ No evacuation centers returned');
                 return;
             }
 
@@ -51,7 +50,6 @@ function initializeEvacuation() {
                 try {
                     geo = JSON.parse(center.location_geojson);
                 } catch (e) {
-                    console.warn('Could not parse location for', center.name);
                     return;
                 }
 
@@ -67,10 +65,8 @@ function initializeEvacuation() {
                     .addTo(map);
                 evacMarkers.push({ marker, center, lat, lng });
             });
-
-            console.log(`✅ Loaded ${evacMarkers.length} evacuation centers`);
         } catch (err) {
-            console.error('❌ Fetch error:', err);
+            console.error('Evacuation centers fetch error:', err);
         }
     }
 
