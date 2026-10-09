@@ -1,0 +1,61 @@
+/* css/report.css */
+.report-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid #333;
+}
+
+.report-container h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 600; }
+
+.form-group select,
+.form-group textarea,
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+}
+.form-group select:focus,
+.form-group textarea:focus { outline: none; border-color: var(--primary); }
+
+.photo-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    margin-top: 1rem;
+    border-radius: 8px;
+    border: 1px solid #444;
+}
+
+#report-map {
+    height: 300px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    margin-bottom: 0.5rem;
+}
+
+#location-status { color: var(--text-muted); font-size: 0.85rem; }
+
+.success-msg {
+    color: var(--success);
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.btn-nav {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+.btn-nav:hover { color: var(--primary); }

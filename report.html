@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StormShield AI | Report Incident</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/report.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">🌪️ StormShield AI</div>
+        <div class="nav-links">
+            <a href="dashboard.html" class="btn-nav">← Back to Dashboard</a>
+        </div>
+    </nav>
+
+    <main class="report-container">
+        <h2>Report an Incident</h2>
+        <p class="subtitle">Your report helps responders prioritize rescue operations.</p>
+
+        <form id="report-form" class="report-form">
+            <div class="form-group">
+                <label for="type">Incident Type *</label>
+                <select id="type" required>
+                    <option value="">-- Select Type --</option>
+                    <option value="flood">🌊 Flood</option>
+                    <option value="fire">🔥 Fire</option>
+                    <option value="earthquake">🌍 Earthquake</option>
+                    <option value="medical">🚑 Medical Emergency</option>
+                    <option value="other">⚠️ Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" rows="4" placeholder="Describe what's happening..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="photo">Upload Photo (optional)</label>
+                <input type="file" id="photo" accept="image/*">
+                <div id="photo-preview" class="photo-preview"></div>
+            </div>
+
+            <div class="form-group">
+                <label>📍 Pin Your Location on the Map *</label>
+                <div id="report-map"></div>
+                <small id="location-status">Click on the map to drop a pin at the incident location.</small>
+            </div>
+
+            <button type="submit" id="submit-report" class="btn-primary">Submit Report</button>
+            <div id="report-error" class="error-msg"></div>
+            <div id="report-success" class="success-msg"></div>
+        </form>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script type="module" src="js/incidents.js"></script>
+</body>
+</html>
