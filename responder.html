@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StormShield AI | Responder Command Center</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/responder.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body class="responder-body">
+    <nav class="navbar">
+        <div class="nav-brand">🌪️ StormShield AI <span class="role-badge">RESPONDER</span></div>
+        <div class="nav-links">
+            <span id="user-name" class="user-greeting">Loading...</span>
+            <button id="logout-btn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-info">
+                <div class="stat-value" id="stat-total">0</div>
+                <div class="stat-label">Total Incidents</div>
+            </div>
+        </div>
+        <div class="stat-card stat-critical">
+            <div class="stat-icon">🆘</div>
+            <div class="stat-info">
+                <div class="stat-value" id="stat-sos">0</div>
+                <div class="stat-label">Active SOS</div>
+            </div>
+        </div>
+        <div class="stat-card stat-warning">
+            <div class="stat-icon">🔴</div>
+            <div class="stat-info">
+                <div class="stat-value" id="stat-severe">0</div>
+                <div class="stat-label">Severe (4-5)</div>
+            </div>
+        </div>
+        <div class="stat-card stat-success">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+                <div class="stat-value" id="stat-resolved">0</div>
+                <div class="stat-label">Resolved Today</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Grid -->
+    <main class="responder-grid">
+        <!-- Left: Filter + Incident List -->
+        <aside class="incident-panel">
+            <div class="panel-header">
+                <h3>🚨 Active Incidents</h3>
+                <select id="filter-type" class="filter-select">
+                    <option value="all">All Types</option>
+                    <option value="flood">🌊 Flood</option>
+                    <option value="fire">🔥 Fire</option>
+                    <option value="earthquake">🌍 Earthquake</option>
+                    <option value="medical">🚑 Medical</option>
+                    <option value="storm">🌀 Storm</option>
+                    <option value="landslide">⛰️ Landslide</option>
+                    <option value="structural">🏚️ Structural</option>
+                    <option value="other">⚠️ Other</option>
+                </select>
+            </div>
+            <div id="incidents-list" class="incidents-list">
+                <p class="empty-state">Loading incidents...</p>
+            </div>
+        </aside>
+
+        <!-- Center: Map -->
+        <section class="map-panel">
+            <div id="responder-map"></div>
+        </section>
+
+        <!-- Right: SOS Alerts -->
+        <aside class="sos-panel">
+            <div class="panel-header">
+                <h3>🆘 Active SOS Alerts</h3>
+            </div>
+            <div id="sos-list" class="sos-list">
+                <p class="empty-state">No active SOS.</p>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- App Scripts -->
+    <script type="module" src="js/responder.js"></script>
+</body>
+</html>
