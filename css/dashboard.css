@@ -94,3 +94,84 @@
     font-size: 0.85rem;
 }
 .btn-logout:hover { background-color: var(--primary); color: white; }
+/* SOS Modal */
+.sos-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.sos-modal-content {
+    background-color: var(--bg-card);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 2px solid var(--danger);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+.sos-modal-content h2 {
+    color: var(--danger);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.sos-modal-content p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.sos-status {
+    background-color: #2a2a2a;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #ffcc00;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.sos-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-cancel {
+    flex: 1;
+    padding: 0.9rem;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+}
+.btn-cancel:hover { background-color: #555; }
+
+.btn-confirm {
+    flex: 2;
+    padding: 0.9rem;
+    background-color: var(--danger);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    animation: pulse 2s infinite;
+}
+.btn-confirm:hover { background-color: #b71c1c; }
+.btn-confirm:disabled { opacity: 0.5; animation: none; cursor: not-allowed; }

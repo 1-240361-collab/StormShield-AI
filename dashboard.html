@@ -47,8 +47,24 @@
         </aside>
     </main>
 
+    <!-- SOS Modal -->
+    <div id="sos-modal" class="sos-modal">
+        <div class="sos-modal-content">
+            <h2>🆘 Emergency SOS</h2>
+            <p>Your GPS location will be sent to emergency responders. Only use this for real emergencies.</p>
+            <div id="sos-status" class="sos-status">📡 Preparing...</div>
+            <div class="sos-actions">
+                <button id="sos-cancel" class="btn-cancel">Cancel</button>
+                <button id="sos-confirm" class="btn-confirm" disabled>🆘 SEND SOS NOW</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- App Scripts -->
     <script type="module" src="js/dashboard.js"></script>
+    <script type="module" src="js/sos.js"></script>
 </body>
 </html>
